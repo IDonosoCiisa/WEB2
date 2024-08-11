@@ -18,7 +18,7 @@
                 @endforeach
             </ul>
         @endif
-        <form method="POST" action="{{ route('validarRegister') }}">
+        <form method="POST" action="{{ route('validateRegister') }}">
             @csrf
             <div class="mb-4">
                 <label for="username" class="block text-sm font-medium text-gray-700">Nombre</label>

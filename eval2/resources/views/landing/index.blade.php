@@ -21,15 +21,15 @@
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <article class="bg-white shadow rounded p-4">
                 <h2 class="text-lg font-bold">Usuarios</h2>
-                <p class="text-sm">Total de usuarios: 10</p>
+                <p class="text-sm">Total de usuarios: {{ $totalUsers }}</p>
             </article>
             <article class="bg-white shadow rounded p-4">
                 <h2 class="text-lg font-bold">Proyectos</h2>
-                <p class="text-sm">Total de proyectos: 10</p>
+                <p class="text-sm">Total de proyectos: {{ $totalProjects }}</p>
             </article>
             <article class="bg-white shadow rounded p-4">
                 <h2 class="text-lg font-bold">Proyectos recientes</h2>
-                <p class="text-sm">5</p>
+                <p class="text-sm">{{ $recentProjects }}</p>
             </article>
         </section>
     </section>

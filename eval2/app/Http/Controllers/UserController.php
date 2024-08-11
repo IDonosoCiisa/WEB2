@@ -6,9 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use function Laravel\Prompts\password;
-
+use Carbon\Carbon;
 class userController extends Controller
 {
     public function formLogin()
@@ -51,6 +49,12 @@ class userController extends Controller
         ]);
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('raiz');
+    }
+
     public function newUser()
     {
         if(Auth::check()){
@@ -84,19 +88,21 @@ class userController extends Controller
             ]);
 
         }
-        if ((int)$data['dayCode'] != (int)date('d')-1) {
+        if ((int)$data['dayCode'] != (int)Carbon::now()->day) {
             return redirect()->back()->withErrors([
                 'dayCode' => 'El código de día no es correcto'
             ]);
         }
         try {
+            //activo 1 dada la naturaleza de la evaluación
             $password = Hash::make($data['password']);
             User::create([
                 'nombre' => $data['nombre'],
                 'email' => $data['email'],
                 'password' => $password,
+                'activo' => 1
             ]);
-            return redirect()->route('backoffice.dashboard');
+            return redirect()->route('formLogin')->with('success', 'Usuario registrado correctamente');
         } catch (\Exception $ex) {
             if ($ex->getCode() == 23000) {
                 return back()->withErrors([
@@ -105,6 +111,6 @@ class userController extends Controller
             }
             return redirect()->back()->with('error', 'Error al registrar el usuario');
         }
-
     }
+
 }
