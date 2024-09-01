@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProyectoController;
 use App\Models\Proyecto;
 use App\Models\User;
 
@@ -47,7 +48,14 @@ Route::get('/backoffice/dashboard', function () {
             'email' => 'Usuario no autenticado'
         ]);
     }
-    $proyectos = Proyecto::query()->where('created_by', $user->id)->get();
+    $proyectos = Proyecto::all();
     return view('backoffice.dashboard', ['user' => $user, 'proyectos' => $proyectos]);
 })->name('backoffice.dashboard');
 
+Route::get('/proyectos', [ProyectoController::class, 'getAll'])->name('proyectos.getAll');
+Route::get('/proyectos/{proyecto}', [ProyectoController::class, 'getOne']);
+Route::post('/proyectos', [ProyectoController::class, 'store'])->name('proyectos.store');
+Route::put('/proyectos/{proyecto}', [ProyectoController::class, 'update'])->name('proyectos.update');
+Route::patch('/proyectos/{proyecto}/activate', [ProyectoController::class, 'activate'])->name('proyectos.activate');
+Route::patch('/proyectos/{proyecto}/deactivate', [ProyectoController::class, 'deactivate'])->name('proyectos.deactivate');
+Route::delete('/proyectos/{proyecto}', [ProyectoController::class, 'destroy'])->name('proyectos.destroy');
