@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 
@@ -14,9 +15,14 @@ class ProyectoController extends Controller
         return response()->json($proyectos);
     }
 
-    public function getOne(Proyecto $proyecto)
+    public function getOne($id)
     {
-        return response()->json($proyecto);
+        try {
+            $proyecto = Proyecto::findOrFail($id);
+            return response()->json($proyecto);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(null, 404);
+        }
     }
 
     // Create a new project
@@ -33,12 +39,16 @@ class ProyectoController extends Controller
         if ($request->_token !== csrf_token()) {
             return response()->json(['error' => 'Token Inválido'], 403);
         }
+        try {
+            $proyecto = Proyecto::create($request->all());
+            return response()->json($proyecto, 201);
+        } catch (\RuntimeException $e) {
+            return response()->json(null, 500);
+        }
 
-        $proyecto = Proyecto::create($request->all());
-        return response()->json($proyecto, 201);
+
     }
 
-    // Update an existing project
     public function update(Request $request, Proyecto $proyecto)
     {
         $request->validate([
@@ -54,11 +64,14 @@ class ProyectoController extends Controller
             return response()->json(['error' => 'Token Inválido'], 403);
         }
 
-        $proyecto->update($request->all());
-        return response()->json($proyecto);
+        try {
+            $proyecto->updateOrFail($request->all());
+            return response()->json($proyecto);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(null, 404);
+        }
     }
 
-    // Activate a project
     public function activate(Request $request, Proyecto $proyecto)
     {
         $request->validate([
@@ -68,12 +81,14 @@ class ProyectoController extends Controller
         if ($request->_token !== csrf_token()) {
             return response()->json(['error' => 'Token Inválido'], 403);
         }
-
-        $proyecto->update(['estado' => 1]);
-        return response()->json($proyecto);
+        try {
+            $proyecto->updateOrFail(['estado' => 1]);
+            return response()->json($proyecto);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(null, 404);
+        }
     }
 
-    // Deactivate a project
     public function deactivate(Request $request, Proyecto $proyecto)
     {
         $request->validate([
@@ -84,8 +99,12 @@ class ProyectoController extends Controller
             return response()->json(['error' => 'Token Inválido'], 403);
         }
 
-        $proyecto->update(['estado' => 0]);
-        return response()->json($proyecto);
+        try {
+            $proyecto->updateOrFail(['estado' => 0]);
+            return response()->json($proyecto);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(null, 404);
+        }
     }
 
     // Delete a project
@@ -99,7 +118,11 @@ class ProyectoController extends Controller
             return response()->json(['error' => 'Token Inválido'], 403);
         }
 
-        $proyecto->delete();
-        return response()->json(null, 204);
+        try {
+            $proyecto->deleteOrFail();
+            return response()->json(null, 204);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(null, 404);
+        }
     }
 }

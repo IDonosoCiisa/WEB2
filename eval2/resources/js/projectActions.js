@@ -40,6 +40,7 @@ $(document).ready(function() {
                         <td class="py-2 px-4 border-b">${response.estado ? 'Active' : 'Inactive'}</td>
                         <td class="py-2 px-4 border-b">${response.monto}</td>
                         <td class="py-2 px-4 border-b">
+                            <button class="bg-blue-600 text-white px-2 py-1 rounded-md view-btn" data-id="${response.id}">Ver</button>
                             <button class="edit-btn bg-yellow-500 text-white px-2 py-1 rounded-md" data-id="${response.id}">Editar</button>
                             <button class="delete-btn bg-red-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Borrar</button>
                             ${response.estado ?
@@ -82,6 +83,7 @@ $(document).ready(function() {
                         <td class="py-2 px-4 border-b">${response.estado ? 'Active' : 'Inactive'}</td>
                         <td class="py-2 px-4 border-b">${response.monto}</td>
                         <td class="py-2 px-4 border-b">
+                            <button class="bg-blue-600 text-white px-2 py-1 rounded-md view-btn" data-id="${response.id}">Ver</button>
                             <button class="edit-btn bg-yellow-500 text-white px-2 py-1 rounded-md" data-id="${response.id}">Editar</button>
                             <button class="delete-btn bg-red-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Borrar</button>
                             ${response.estado ?
@@ -109,6 +111,7 @@ $(document).ready(function() {
             success: function(response) {
                 $(`#project-${id} td:nth-child(4)`).text('Active');
                 $(`#project-${id} td:nth-child(6)`).html(`
+                    <button class="bg-blue-600 text-white px-2 py-1 rounded-md view-btn" data-id="${response.id}">Ver</button>
                     <button class="edit-btn bg-yellow-500 text-white px-2 py-1 rounded-md" data-id="${response.id}">Editar</button>
                     <button class="delete-btn bg-red-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Borrar</button>
                     <button class="deactivate-btn bg-gray-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Desactivar</button>
@@ -130,6 +133,7 @@ $(document).ready(function() {
             success: function(response) {
                 $(`#project-${id} td:nth-child(4)`).text('Inactive');
                 $(`#project-${id} td:nth-child(6)`).html(`
+                    <button class="bg-blue-600 text-white px-2 py-1 rounded-md view-btn" data-id="${response.id}">Ver</button>
                     <button class="edit-btn bg-yellow-500 text-white px-2 py-1 rounded-md" data-id="${response.id}">Editar</button>
                     <button class="delete-btn bg-red-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Borrar</button>
                     <button class="activate-btn bg-green-600 text-white px-2 py-1 rounded-md" data-id="${response.id}">Activar</button>
