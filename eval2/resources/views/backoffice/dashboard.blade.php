@@ -12,7 +12,7 @@
 <body class="bg-gray-100 text-gray-900">
 <div class="flex justify-between items-center p-4 bg-white shadow-md">
     <h1 class="text-2xl font-semibold">Dashboard</h1>
-    <h1>{{ $user->nombre }}</h1>
+    <h1 class="text-2xl font-semibold">{{ $user->nombre }}</h1>
     <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md">Logout</button>
@@ -21,7 +21,7 @@
 <div class="p-8">
     <h2 class="text-xl font-semibold mb-4">Proyectos</h2>
     <button onclick="openModal('createModal')" class="bg-blue-600 text-white px-4 py-2 rounded-md mb-4 inline-block">Crear Proyecto</button>
-    <table class="min-w-full bg-white">
+    <table class="min-w-full bg-white text-left">
         <thead>
         <tr>
             <th class="py-2 px-4 border-b">Nombre del proyecto</th>
